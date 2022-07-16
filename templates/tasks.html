@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}To do list{% endblock title %}
+
+{% block content %}
+<div class="container">
+        <div class="nav-bar">
+            <div>
+                <h1>Hello {{ request.user | title }}</h1>
+
+                {% if incomplete_task_count < 1  %}
+                <p>You have no incomplete task</p>
+                {% else %}
+                <p>You have {{ incomplete_task_count }} incomplete task{{incomplete_task_count|pluralize:"s"}}. Keep going!</p>
+                {% endif %}
+            </div>
+            <div>
+                <h3 class="log-out"><a href="{% url 'logout' %}">Logout</a></h3>
+                <a href="{% url 'create-task' %}"><div class="add-task">+ Add Task</div></a>
+            </div>
+
+        </div>
+        <form class="search-form" action="" method="get">
+            <div class="form-group">
+                <input type="search" name="search-area" id="search-area" value="{{search_input}}">
+                <button class="btn search-btn" type="submit">Search</button>
+            </div>
+        </form>
+
+
+        <div class="task-items-wrap">
+
+             {% for task in tasks %}
+
+                <div class="task-wrapper">
+                    <div class="task-item">
+                        {% if task.complete %}
+                        <div class="task-complete-icon">
+                        </div>
+                        <s><a href="{% url 'edit-task' task.id %}">{{ task.title }}</a></s>
+
+                        {% else %}
+                        <div class="task-incomplete-icon">
+                        </div>
+                        <a href="{% url 'edit-task' task.id %}">{{ task.title }}</a>
+
+                        {% endif %}
+                    </div>
+                    <a class="delete-task" href="{% url 'delete-task' task.id %}">
+                        &#9747</a>
+                </div>
+
+              {% empty %}
+                <h2> No Task</h2>
+
+            {% endfor %}
+
+        </div>
+
+        <div class="footer">
+            <a
+                    href="{% url 'delete-complete-tasks' %}"><button id="clear-completed" type="submit" >Clear
+                Completed</button></a>
+            <a href="{% url 'password_change' %}">Change password ?</a>
+            <a href="{% url 'delete-tasks' %}"><button id="clear-all" type="submit" >Clear all</button></a>
+        </div>
+
+</div>
+
+{% endblock content %}

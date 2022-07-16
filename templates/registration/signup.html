@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Signup{% endblock title %}
+
+{% block content %}
+<div class="container">
+     <div class="nav-bar">
+             <h1>Register</h1>
+     </div>
+
+     <form class="form-control" action="" method="post">
+         {% csrf_token %}
+
+         <div class="form-group">
+             <label>{{ form.username.label }}</label>
+             {{ form.username }}
+         </div>
+
+          <div class="form-group">
+             <label>{{ form.email.label }}</label>
+             {{ form.email }}
+         </div>
+
+          <div class="form-group">
+             <label>{{ form.password1.label }}</label>
+             {{ form.password1 }}
+         </div>
+
+         <div class="form-group">
+             <label>{{ form.password2.label }}</label>
+             {{ form.password2 }}
+         </div>
+
+         <input id="submit-btn" type="submit" value="Register">
+     </form>
+
+    <p id="footer">Already have an account ? <a href="{% url 'login' %}">Login</a> </p>
+</div>
+{% endblock content %}
